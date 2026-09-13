@@ -2,8 +2,12 @@
   "semi": false,
   "singleQuote": false,
   "trailingComma": "all",
+  "useTabs": true,
   "tabWidth": 2,
   "printWidth": 100,
+  "bracketSameLine": false,
+  "jsxSingleQuote": false,
   "bracketSpacing": true,
+  "endOfLine": "lf",
   "plugins": ["prettier-plugin-tailwindcss"]
 }
