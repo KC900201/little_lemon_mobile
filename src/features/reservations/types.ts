@@ -9,3 +9,13 @@ export type ReservationInput = {
 }
 
 export type Reservation = ReservationInput & { id: string; status: "confirmed" }
+
+export type CATEGORY = "Starters" | "Mains" | "Desserts" |"Drinks"
+
+export type Menu = {
+  name: string
+  category: CATEGORY
+  price: string
+  imageUri?: string
+  isSpecial?: boolean
+}
