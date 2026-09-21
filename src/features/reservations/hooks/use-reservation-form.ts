@@ -21,7 +21,7 @@ export function useReservationForm() {
         onSuccess: (reservation) => {
           setLastReservation(reservation)
           draft.reset()
-          router.replace("./reservations/success")
+          router.replace("/reservations/success")
         }
       }
     )

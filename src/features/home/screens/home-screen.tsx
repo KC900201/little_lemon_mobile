@@ -1,12 +1,13 @@
 import { useRouter } from "expo-router"
 import { useState } from "react"
-import { FlatList, View } from "react-native"
+import { FlatList, Text, View } from "react-native"
 
 import { useMenu } from "@/features/reservations/hooks/use-menu"
 import { CATEGORY } from "@/features/reservations/types"
 
-import { Button } from "@/shared/ui/button"
-import { HeroSearch } from "../components/hero-search"
+import { Header } from "@/shared/ui/header"
+import { CategoryFilterBar } from "../components/category-filter-bar"
+import { HeroIntro } from "../components/hero-intro"
 import { MenuItemCard } from "../components/menu-item-card"
 
 const CATEGORIES: CATEGORY[] = ["Starters", "Mains", "Desserts", "Drinks"]
@@ -18,20 +19,32 @@ export function HomeScreen() {
 	const { data: items } = useMenu(query, category)
 
 	return (
-		<View className="flex-1 bg-white">
-			<HeroSearch query={query} onChangeQuery={setQuery} />
+		<View className="mt-10 flex-1 bg-white">
+			<Header />
 
 			<FlatList
+				ListHeaderComponent={
+					<>
+						<HeroIntro />
+						<Text className="px-4 pt-4 font-body-bold text-lg text-secondary-dark">
+							ORDER FOR DELIVERY!
+						</Text>
+						<CategoryFilterBar categories={CATEGORIES} selected={category} onSelect={setCategory} />
+					</>
+				}
 				data={items}
 				keyExtractor={(item, index) => `${item.name}-${index}`}
-				contentContainerStyle={{ gap: 3, padding: 4 }}
+				contentContainerStyle={{ gap: 4, paddingBottom: 16 }}
 				renderItem={({ item }) => (
-					<MenuItemCard name={item.name} price={item.price} isSpecial={item.isSpecial} />
+					<MenuItemCard
+						name={item.name}
+						description={item.description}
+						price={item.price}
+						imageKey={item.name}
+						isSpecial={item.isSpecial}
+					/>
 				)}
 			/>
-			<View className="p-4">
-				<Button label="Reserve a table" onPress={() => router.push("./reservations")} />
-			</View>
 		</View>
 	)
 }

@@ -7,26 +7,31 @@ interface PartySizeStepperProps {
 	max?: number
 }
 
+interface StepperButtonProps {
+	label: string
+	onPress: () => void
+	disabled?: boolean
+}
+
+function StepperButton({ label, onPress, disabled }: StepperButtonProps) {
+	return (
+		<Pressable
+			accessibilityRole="button"
+			disabled={disabled}
+			onPress={onPress}
+			className={`h-8 w-8 items-center justify-center rounded-full border border-secondary-dark ${disabled ? "opacity-30" : ""}`}
+		>
+			<Text className="font-body-bold text-lg">{label}</Text>
+		</Pressable>
+	)
+}
+
 export function PartySizeStepper({ value, onChange, min = 1, max = 10 }: PartySizeStepperProps) {
 	return (
 		<View className="flex-row items-center gap-4">
-			<Pressable
-				accessibilityRole="button"
-				accessibilityLabel="Decrease party size"
-				disabled={value <= min}
-				onPress={() => onChange(value - 1)}
-			>
-				<Text className="font-body-bold text-2xl">-</Text>
-			</Pressable>
+			<StepperButton label="-" disabled={value <= min} onPress={() => onChange(value - 1)} />
 			<Text className="font-body-bold text-lg">{value}</Text>
-			<Pressable
-				accessibilityRole="button"
-				accessibilityLabel="Increase party size"
-				disabled={value >= max}
-				onPress={() => onChange(value + 1)}
-			>
-				<Text className="font-body-bold text-2xl">+</Text>
-			</Pressable>
+			<StepperButton label="+" disabled={value >= max} onPress={() => onChange(value + 1)} />
 		</View>
 	)
 }

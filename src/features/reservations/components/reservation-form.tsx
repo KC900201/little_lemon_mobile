@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Text, TextInput, View } from "react-native"
 
 import { Button } from "@/shared/ui/button"
@@ -17,6 +17,10 @@ export function ReservationForm({ date }: ReservationFormProps) {
 
 	const [name, setName] = useState("")
 	const [phone, setPhone] = useState("")
+
+	useEffect(() => {
+		draft.setDate(date)
+	}, [date])
 
 	return (
 		<View className="gap-4 p-4">
@@ -42,7 +46,7 @@ export function ReservationForm({ date }: ReservationFormProps) {
 			) : null}
 			<Button
 				label="Reserve"
-				disabled={isValid || !name || !phone || isPending}
+				disabled={!isValid || !name || !phone || isPending}
 				onPress={() => submit({ name, phone })}
 			/>
 		</View>

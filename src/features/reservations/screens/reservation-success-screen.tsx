@@ -12,7 +12,7 @@ export function ReservationSuccessScreen() {
 
 	// Guard: user navigated here directly without
 	if (!reservation) {
-		router.replace("./reservations")
+		router.replace("/reservations")
 		return null
 	}
 

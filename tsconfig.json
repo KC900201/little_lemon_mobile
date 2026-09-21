@@ -6,7 +6,7 @@
       "@/*": [
         "./src/*"
       ],
-      "@/assets/*": [
+      "@assets/*": [
         "./assets/*"
       ]
     }
@@ -17,6 +17,7 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "types/**/*.d.ts",
-    "nativewind-env.d.ts"
+    "nativewind-env.d.ts",
+    "src/svg-env.d.ts"
   ]
 }

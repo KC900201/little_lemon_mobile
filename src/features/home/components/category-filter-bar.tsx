@@ -1,15 +1,22 @@
-import { PillChip } from "@/shared/ui/pill-chip"
 import { ScrollView } from "react-native"
 
+import { CATEGORY } from "@/features/reservations/types"
+import { PillChip } from "@/shared/ui/pill-chip"
+
 interface CategoryFilterBarProps {
-	categories: string[]
+	categories: CATEGORY[]
 	selected: string
-	onSelect: (category: string) => void
+	onSelect: (category: CATEGORY) => void
 }
 
 export function CategoryFilterBar({ categories, selected, onSelect }: CategoryFilterBarProps) {
 	return (
-		<ScrollView horizontal showsHorizontalScrollIndicator={false} className="gap-2 px-4">
+		<ScrollView
+			horizontal
+			showsHorizontalScrollIndicator={false}
+			contentContainerClassName="gap-4"
+			className="px-4"
+		>
 			{categories.map((category) => (
 				<PillChip
 					key={category}

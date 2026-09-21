@@ -16,6 +16,7 @@ export type Menu = {
   name: string
   category: CATEGORY
   price: string
+  description: string
   imageUri?: string
   isSpecial?: boolean
 }

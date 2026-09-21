@@ -3,34 +3,42 @@
 @tailwind utilities;
 
 :root {
-  --color-primary-green: #495e57;
-  --color-primary-yellow: #f4ce14;
-  --color-accent-green: #48742c;
-  --color-placeholder: #d9d9d9;
-  --color-secondary-salmon: #ee9972;
-  --color-secondary-peach: #fbdabb;
-  --color-secondary-gray: #edefee;
-  --color-secondary-dark: #333333;
+	--color-primary-green: #495e57;
+	--color-primary-yellow: #f4ce14;
+	--color-accent-green: #48742c;
+	--color-placeholder: #d9d9d9;
+	--color-secondary-salmon: #ee9972;
+	--color-secondary-peach: #fbdabb;
+	--color-secondary-gray: #edefee;
+	--color-secondary-dark: #333333;
 
-  --font-display: "MarkaziText";
-  --font-body: "Karla";
+	--font-display: "MarkaziText";
+	--font-body: "Karla";
 }
 
 /* Reusable component-level classes matching the UI kit's pill/card shapes */
 @layer components {
-  .chip-pill {
-    @apply rounded-pill bg-placeholder px-4 py-2;
-  }
+	.chip-pill {
+		@apply rounded-pill bg-placeholder px-4 py-2;
+	}
 
-  .card-surface {
-    @apply rounded-card bg-white shadow-sm;
-  }
+	.card-surface {
+		@apply rounded-2xl bg-white shadow-sm;
+	}
 
-  .btn-primary {
-    @apply rounded-card bg-primary-yellow px-4 py-3 items-center justify-center;
-  }
+	.btn-primary {
+		@apply items-center justify-center rounded-full bg-primary-yellow px-6 py-3;
+	}
 
-  .badge-check {
-    @apply items-center justify-center rounded-full bg-accent-green;
-  }
+	.btn-secondary {
+		@apply items-center justify-center rounded-full bg-primary-green px-6 py-3;
+	}
+
+	.btn-tertiary {
+		@apply items-center justify-center rounded-full bg-secondary-salmon px-6 py-3;
+	}
+
+	.badge-check {
+		@apply items-center justify-center rounded-full bg-accent-green;
+	}
 }
