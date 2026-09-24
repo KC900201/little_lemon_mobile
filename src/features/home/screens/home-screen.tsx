@@ -5,7 +5,6 @@ import { FlatList, Text, View } from "react-native"
 import { useMenu } from "@/features/reservations/hooks/use-menu"
 import { CATEGORY } from "@/features/reservations/types"
 
-import { Header } from "@/shared/ui/header"
 import { CategoryFilterBar } from "../components/category-filter-bar"
 import { HeroIntro } from "../components/hero-intro"
 import { MenuItemCard } from "../components/menu-item-card"
@@ -20,8 +19,6 @@ export function HomeScreen() {
 
 	return (
 		<View className="mt-10 flex-1 bg-white">
-			<Header />
-
 			<FlatList
 				ListHeaderComponent={
 					<>

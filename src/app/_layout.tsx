@@ -5,9 +5,14 @@ import {
 	useFonts,
 } from "@expo-google-fonts/markazi-text"
 import { QueryClientProvider } from "@tanstack/react-query"
-import { Stack } from "expo-router"
+import { Drawer } from "expo-router/drawer"
+import { Alert } from "react-native"
+import { SafeAreaProvider } from "react-native-safe-area-context"
 
 import { queryClient } from "@/shared/lib/query-client"
+
+import { Header } from "@/shared/ui/header"
+import { SideMenuContent } from "@/shared/ui/side-menu-content"
 
 import "@/global.css"
 
@@ -22,9 +27,26 @@ export default function RootLayout() {
 
 	if (!fontsLoaded) return null
 
+	const onClickBasket = () => {
+		Alert.alert("You clicked the basket")
+	}
+
 	return (
-		<QueryClientProvider client={queryClient}>
-			<Stack screenOptions={{ headerShown: false }} />
-		</QueryClientProvider>
+		<SafeAreaProvider>
+			<QueryClientProvider client={queryClient}>
+				<Drawer
+					drawerContent={(props) => <SideMenuContent {...props} />}
+					screenOptions={{
+						header: (props) => (
+							<Header showBack={props.route.name !== "index"} onBasketPress={onClickBasket} />
+						),
+						drawerType: "front",
+					}}
+				>
+					<Drawer.Screen name="index" options={{ title: "Home" }} />
+					<Drawer.Screen name="reservation/index" options={{ title: "Reservations" }} />
+				</Drawer>
+			</QueryClientProvider>
+		</SafeAreaProvider>
 	)
 }

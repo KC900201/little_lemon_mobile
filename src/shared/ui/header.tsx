@@ -1,5 +1,8 @@
-import { useRouter } from "expo-router"
-import { Pressable, Text, View } from "react-native"
+import { useNavigation, useRouter } from "expo-router"
+import { DrawerActions } from "expo-router/build/react-navigation"
+import { CircleChevronLeft } from "lucide-react-native"
+import { Pressable, View } from "react-native"
+import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 // Assets
 import Basket from "@assets/icons/basket.svg"
@@ -14,18 +17,24 @@ interface HeaderProps {
 
 export function Header({ showBack, onMenuPress, onBasketPress }: HeaderProps) {
 	const router = useRouter()
+	const navigation = useNavigation()
+	const insets = useSafeAreaInsets()
+	const openMenu = () => navigation.dispatch(DrawerActions.openDrawer())
 
 	return (
-		<View className="flex-row items-center justify-between border-b border-secondary-gray">
+		<View
+			style={{ paddingTop: insets.top }}
+			className="flex-row items-center justify-between bg-white px-4 pb-2"
+		>
 			<Pressable
 				accessibilityRole="button"
 				accessibilityLabel={showBack ? "Go back" : "Open menu"}
 				onPress={showBack ? () => router.back() : onMenuPress}
 			>
 				{showBack ? (
-					<Text className="text-2xl text-secondary-dark">←</Text>
+					<CircleChevronLeft size={24} color={"#495e57"} />
 				) : (
-					<HamburgerMenu width={24} height={24} />
+					<HamburgerMenu width={24} height={24} onPress={openMenu} />
 				)}
 			</Pressable>
 			<Logo width={140} height={28} />
