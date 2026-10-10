@@ -16,6 +16,15 @@ import { SideMenuContent } from "@/shared/ui/side-menu-content"
 
 import "@/global.css"
 
+/**
+ * To-do:
+ * [ ] Add in Confirmation screen after reservation application
+ * [ ] Repositon "reservation button" in landing page, header section
+ * [ ] Update Intro section Title fonts and size, include header picture
+ * [ ] Add in form validation for each input field
+ * [ ] Add in agree with terms and policy checkbox in submission form
+ */
+
 export default function RootLayout() {
 	const [fontsLoaded] = useFonts({
 		MarkaziText: MarkaziText_400Regular,
@@ -45,6 +54,10 @@ export default function RootLayout() {
 				>
 					<Drawer.Screen name="index" options={{ title: "Home" }} />
 					<Drawer.Screen name="reservation/index" options={{ title: "Reservations" }} />
+					<Drawer.Screen
+						name="reservations/success"
+						options={{ drawerItemStyle: { display: "none" }, title: "Confirmation" }}
+					/>
 				</Drawer>
 			</QueryClientProvider>
 		</SafeAreaProvider>

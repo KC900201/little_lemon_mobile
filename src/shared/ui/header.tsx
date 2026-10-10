@@ -5,9 +5,9 @@ import { Pressable, View } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 // Assets
-import Basket from "@assets/icons/basket.svg"
-import HamburgerMenu from "@assets/icons/hamburger-menu.svg"
-import Logo from "@assets/icons/Logo.svg"
+import Basket from "@/assets/icons/basket.svg"
+import HamburgerMenu from "@/assets/icons/hamburger-menu.svg"
+import Logo from "@/assets/icons/Logo.svg"
 
 interface HeaderProps {
 	showBack?: boolean
