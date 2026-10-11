@@ -77,7 +77,7 @@ export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
 			</Text>
 			<Pressable
 				onPress={() => setShowDatePicker(true)}
-				className="mb-1 rounded border border-orange-300 px-3 py-2"
+				className="mb-2 rounded border border-orange-300 px-3 py-2"
 			>
 				<Text>{selectedDate || "Select a date"}</Text>
 			</Pressable>
@@ -100,7 +100,7 @@ export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
 				control={control}
 				name="time"
 				render={({ field: { onChange, value } }) => (
-					<View className="mb-1 rounded border border-orange-300">
+					<View className="mb-2 rounded border border-orange-300">
 						<Picker selectedValue={value} onValueChange={onChange}>
 							<Picker.Item label="Select a time" value={undefined} />
 							{TIME_SLOTS.map((slot) => (
@@ -124,7 +124,7 @@ export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
 						value={value}
 						onChangeText={onChange}
 						keyboardType="number-pad"
-						className="mb-1 rounded border border-orange-300 px-3 py-2"
+						className="mb-2 rounded border border-orange-300 px-3 py-2"
 					/>
 				)}
 			/>
@@ -144,7 +144,7 @@ export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
 					<TextInput
 						value={value}
 						onChangeText={onChange}
-						className="mb-1 rounded border border-orange-300 px-3 py-2"
+						className="mb-2 rounded border border-orange-300 px-3 py-2"
 					/>
 				)}
 			/>
@@ -162,7 +162,7 @@ export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
 						value={value}
 						onChangeText={onChange}
 						keyboardType="phone-pad"
-						className="mb-1 rounded border border-orange-300 px-3 py-2"
+						className="mb-2 rounded border border-orange-300 px-3 py-2"
 					/>
 				)}
 			/>
@@ -180,7 +180,7 @@ export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
 						value={value}
 						onChangeText={onChange}
 						keyboardType="email-address"
-						className="mb-1 rounded border border-orange-300 px-3 py-2"
+						className="mb-2 rounded border border-orange-300 px-3 py-2"
 					/>
 				)}
 			/>
