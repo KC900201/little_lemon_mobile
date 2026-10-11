@@ -14,8 +14,8 @@ export function HeroIntro() {
 	}
 
 	return (
-		<View className="bg-secondary-dark px-4 pb-6 pt-4">
-			<View className="flex-row items-center gap-3">
+		<View className="bg-primary-green px-4 pb-6 pt-4">
+			<View className="mb-3 flex-row items-center gap-3">
 				<View className="flex-1">
 					<Text className="font-display text-4xl text-primary-yellow">Little Lemon</Text>
 					<Text className="font-display text-xl text-white">Chicago</Text>

@@ -29,7 +29,9 @@ export function ConfirmationModal({ visible, values, onCancel, onConfirm }: Prop
 			<View className="flex-1 items-center justify-center bg-black/40 px-6">
 				<View className="w-full rounded-lg bg-white p-4">
 					{/* Confirmation message */}
-					<View className="mb-3 rounded bg-secondary-dark p-3"></View>
+					<View className="mb-3 rounded bg-secondary-dark p-3">
+						<Text className="font-body-bold text-white">Please confirm your reservation</Text>
+					</View>
 
 					{/* Reservation information */}
 					<Text className="mb-2 font-body-bold text-secondary-dark">
@@ -49,7 +51,7 @@ export function ConfirmationModal({ visible, values, onCancel, onConfirm }: Prop
 						Are you sure you want to proceed?
 					</Text>
 
-					<Text className="flex-row gap-3">
+					<View className="flex-row items-center justify-start gap-6">
 						<Pressable
 							onPress={onConfirm}
 							className="flex-1 rounded-full bg-primary-yellow px-4 py-3"
@@ -62,7 +64,7 @@ export function ConfirmationModal({ visible, values, onCancel, onConfirm }: Prop
 						>
 							<Text className="text-center font-body-bold text-white">Cancel</Text>
 						</Pressable>
-					</Text>
+					</View>
 				</View>
 			</View>
 		</Modal>

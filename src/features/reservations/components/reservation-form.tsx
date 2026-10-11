@@ -1,11 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import DateTimePicker from "@react-native-community/datetimepicker"
 import { Picker } from "@react-native-picker/picker"
-import { View } from "lucide-react-native"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
-import { Platform, Pressable, ScrollView, Text, TextInput } from "react-native"
+import { Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native"
 
+import { useFocusEffect } from "expo-router"
 import { ReservationFormValues, reservationSchema, TIME_SLOTS } from "../schema/reservation-schema"
 import { ConfirmationModal } from "./confirmation-modal"
 
@@ -20,26 +20,39 @@ export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
 	const [showDatePicker, setShowDatePicker] = useState(false)
 	const [pendingValues, setPendingValues] = useState<ReservationFormValues | null>(null)
 
+	const defaultValues: Partial<ReservationFormValues> = {
+		date,
+		time: undefined,
+		partySize: "",
+		name: "",
+		phone: "",
+		email: "",
+		courseReservation: "",
+		specialRequest: "",
+		agreedToTerms: false,
+	}
+
 	const {
 		control,
 		handleSubmit,
 		setValue,
+		reset,
 		watch,
 		formState: { errors },
 	} = useForm<ReservationFormValues>({
 		resolver: zodResolver(reservationSchema),
-		defaultValues: {
-			date,
-			time: undefined,
-			partySize: "",
-			name: "",
-			phone: "",
-			email: "",
-			courseReservation: "",
-			specialRequest: "",
-			agreedToTerms: false,
-		},
+		defaultValues,
 	})
+
+	useFocusEffect(
+		useCallback(() => {
+			return () => {
+				reset(defaultValues)
+				setPendingValues(null)
+				setShowDatePicker(false)
+			}
+		}, [reset, date]),
+	)
 
 	const selectedDate = watch("date")
 
@@ -208,7 +221,7 @@ export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
 				render={({ field: { onChange, value } }) => (
 					<Pressable onPress={() => onChange(!value)} className="mb-1 flex-row items-center gap-2">
 						<View
-							className={`h-5 w-5 rounded border ${value ? "bg-primary-dark" : "bg-white"} border-secondary-dark`}
+							className={`h-5 w-5 rounded border ${value ? "bg-primary-green" : "bg-white"} border-secondary-dark`}
 						/>
 						<Text className="flex-1 text-xs text-secondary-dark">
 							I agree with the Terms and Condition, and Privacy Policy
@@ -220,7 +233,7 @@ export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
 				<Text className="mb-2 text-xs text-red-500">{errors.agreedToTerms.message}</Text>
 			)}
 
-			<View className="my-4 flex-row gap-3">
+			<View className="my-4 flex-row items-center justify-center gap-3">
 				<Pressable
 					onPress={handleSubmit(onSubmit)}
 					className="flex-1 rounded-full bg-primary-yellow px-4 py-3"
@@ -239,6 +252,7 @@ export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
 				onConfirm={() => {
 					if (pendingValues) onConfirmed(pendingValues)
 					setPendingValues(null)
+					reset(defaultValues)
 				}}
 			/>
 		</ScrollView>
