@@ -18,11 +18,9 @@ import "@/global.css"
 
 /**
  * To-do:
- * [x] Add in Confirmation screen after reservation application
  * [ ] Repositon "reservation button" in landing page, header section
- * [x] Update Intro section Title fonts and size, include header picture
- * [x] Add in form validation for each input field
- * [x] Add in agree with terms and policy checkbox in submission form
+ * [ ] Add tabs layout
+ * [ ] Incorporate supabase library into project (after backend setup)
  */
 
 export default function RootLayout() {
