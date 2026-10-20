@@ -18,11 +18,11 @@ import "@/global.css"
 
 /**
  * To-do:
- * [ ] Add in Confirmation screen after reservation application
+ * [x] Add in Confirmation screen after reservation application
  * [ ] Repositon "reservation button" in landing page, header section
- * [ ] Update Intro section Title fonts and size, include header picture
- * [ ] Add in form validation for each input field
- * [ ] Add in agree with terms and policy checkbox in submission form
+ * [x] Update Intro section Title fonts and size, include header picture
+ * [x] Add in form validation for each input field
+ * [x] Add in agree with terms and policy checkbox in submission form
  */
 
 export default function RootLayout() {
@@ -53,7 +53,7 @@ export default function RootLayout() {
 					}}
 				>
 					<Drawer.Screen name="index" options={{ title: "Home" }} />
-					<Drawer.Screen name="reservation/index" options={{ title: "Reservations" }} />
+					<Drawer.Screen name="reservations/index" options={{ title: "Reservations" }} />
 					<Drawer.Screen
 						name="reservations/success"
 						options={{ drawerItemStyle: { display: "none" }, title: "Confirmation" }}

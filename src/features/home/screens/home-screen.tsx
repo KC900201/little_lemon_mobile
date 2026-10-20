@@ -21,13 +21,13 @@ export function HomeScreen() {
 		<View className="mt-10 flex-1 bg-white">
 			<FlatList
 				ListHeaderComponent={
-					<>
+					<View className="mt-0 flex-1 gap-2 pt-0">
 						<HeroIntro />
 						<Text className="px-4 pt-4 font-body-bold text-lg text-secondary-dark">
 							ORDER FOR DELIVERY!
 						</Text>
 						<CategoryFilterBar categories={CATEGORIES} selected={category} onSelect={setCategory} />
-					</>
+					</View>
 				}
 				data={items}
 				keyExtractor={(item, index) => `${item.name}-${index}`}

@@ -2,9 +2,9 @@
   "expo": {
     "name": "little_lemon_mobile",
     "slug": "little_lemon_mobile",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
-    "icon": "./src/assets/images/icon.png",
+    "icon": "./src/assets/icons/icon.jpg",
     "scheme": "littlelemonmobile",
     "userInterfaceStyle": "automatic",
     "ios": {

@@ -1,11 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import DateTimePicker from "@react-native-community/datetimepicker"
 import { Picker } from "@react-native-picker/picker"
+import { useFocusEffect, useRouter } from "expo-router"
 import { useCallback, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native"
 
-import { useFocusEffect } from "expo-router"
 import { ReservationFormValues, reservationSchema, TIME_SLOTS } from "../schema/reservation-schema"
 import { ConfirmationModal } from "./confirmation-modal"
 
@@ -19,6 +19,8 @@ interface ReservationFormProps {
 export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
 	const [showDatePicker, setShowDatePicker] = useState(false)
 	const [pendingValues, setPendingValues] = useState<ReservationFormValues | null>(null)
+
+	const router = useRouter()
 
 	const defaultValues: Partial<ReservationFormValues> = {
 		date,
@@ -68,7 +70,7 @@ export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
 	}
 
 	return (
-		<ScrollView className="flex-1 bg-white px-4 pt-4">
+		<ScrollView className="flex-1 bg-white px-4 pt-4" keyboardShouldPersistTaps="handled">
 			<Text className="font-heading text-primary-dark mb-2 text-xl">Reservation Details</Text>
 
 			{/* Visitation Date */}
@@ -240,7 +242,10 @@ export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
 				>
 					<Text className="text-center font-body-bold text-secondary-dark">Reserve a table</Text>
 				</Pressable>
-				<Pressable className="flex-1 rounded-full bg-secondary-dark px-4 py-3">
+				<Pressable
+					className="flex-1 rounded-full bg-secondary-dark px-4 py-3"
+					onPress={() => router.replace("/")}
+				>
 					<Text className="text-center font-body-bold text-white">Cancel</Text>
 				</Pressable>
 			</View>
