@@ -1,9 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Link } from "expo-router"
 import { Controller, useForm } from "react-hook-form"
-import { Alert, Text, View } from "react-native"
+import { Text, View } from "react-native"
 
-import { signupSchema, SignupValues } from "@/features/auth/schema/auth-schema"
+import { LoginValues, signupSchema, SignupValues } from "@/features/auth/schema/auth-schema"
+import { useAuthStore } from "@/features/auth/store/auth-store"
 
 import { AuthShell } from "@/features/auth/components/auth-shell"
 import { Button } from "@/shared/ui/button"
@@ -19,9 +20,13 @@ export default function SignupScreen() {
 		defaultValues: { name: "", email: "", password: "", confirmPassword: "" },
 	})
 
+	const signIn = useAuthStore((s) => s.signIn)
+
 	// TODO: replace with the real auth call
-	const onSubmit = async (_values: SignupValues) => {
-		Alert.alert("Account created")
+
+	const onSubmit = async (_values: LoginValues) => {
+		// await real auth call here
+		signIn()
 	}
 
 	return (

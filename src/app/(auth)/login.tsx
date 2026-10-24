@@ -1,9 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Link } from "expo-router"
 import { Controller, useForm } from "react-hook-form"
-import { Alert, Text, View } from "react-native"
+import { Text, View } from "react-native"
 
 import { loginSchema, LoginValues } from "@/features/auth/schema/auth-schema"
+
+import { useAuthStore } from "@/features/auth/store/auth-store"
 
 import { AuthShell } from "@/features/auth/components/auth-shell"
 import { Button } from "@/shared/ui/button"
@@ -19,9 +21,12 @@ export default function LoginScreen() {
 		defaultValues: { email: "", password: "" },
 	})
 
+	const signIn = useAuthStore((s) => s.signIn)
+
 	// TODO: replace with real auth call (supabase)
 	const onSubmit = async (_values: LoginValues) => {
-		Alert.alert("Signed in")
+		// await real auth call here
+		signIn()
 	}
 
 	return (
