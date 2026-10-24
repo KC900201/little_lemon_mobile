@@ -18,10 +18,10 @@ export function HomeScreen() {
 	const { data: items } = useMenu(query, category)
 
 	return (
-		<View className="mt-10 flex-1 bg-white">
+		<View className="flex-1 bg-white">
 			<FlatList
 				ListHeaderComponent={
-					<View className="mt-0 flex-1 gap-2 pt-0">
+					<View className="gap-2">
 						<HeroIntro />
 						<Text className="px-4 pt-4 font-body-bold text-lg text-secondary-dark">
 							ORDER FOR DELIVERY!

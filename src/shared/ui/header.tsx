@@ -8,6 +8,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context"
 import Basket from "@/assets/icons/basket.svg"
 import HamburgerMenu from "@/assets/icons/hamburger-menu.svg"
 import Logo from "@/assets/icons/Logo.svg"
+import { colors } from "../theme/colors"
 
 interface HeaderProps {
 	showBack?: boolean
@@ -29,12 +30,12 @@ export function Header({ showBack, onMenuPress, onBasketPress }: HeaderProps) {
 			<Pressable
 				accessibilityRole="button"
 				accessibilityLabel={showBack ? "Go back" : "Open menu"}
-				onPress={showBack ? () => router.back() : onMenuPress}
+				onPress={showBack ? () => router.back() : (onMenuPress ?? openMenu)}
 			>
 				{showBack ? (
-					<CircleChevronLeft size={24} color={"#495e57"} />
+					<CircleChevronLeft size={24} color={colors.primaryGreen} />
 				) : (
-					<HamburgerMenu width={24} height={24} onPress={openMenu} />
+					<HamburgerMenu width={24} height={24} />
 				)}
 			</Pressable>
 			<Logo width={140} height={28} />
