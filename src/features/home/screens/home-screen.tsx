@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { FlatList, Text, View } from "react-native"
 
 import { useMenu } from "@/features/reservations/hooks/use-menu"
@@ -15,11 +15,20 @@ export function HomeScreen() {
 	const router = useRouter()
 	const [query, setQuery] = useState("")
 	const [category, setCategory] = useState<CATEGORY>(CATEGORIES[0])
-	const { data: items } = useMenu(query, category)
+	const [imageKey, setImageKey] = useState(0)
+
+	const { data: items, refetch, isRefetching } = useMenu(query, category)
+
+	const onRefresh = useCallback(async () => {
+		setImageKey((k) => k + 1)
+		await refetch()
+	}, [refetch])
 
 	return (
 		<View className="flex-1 bg-white">
 			<FlatList
+				refreshing={isRefetching}
+				onRefresh={onRefresh}
 				ListHeaderComponent={
 					<View className="gap-2">
 						<HeroIntro />
@@ -34,6 +43,7 @@ export function HomeScreen() {
 				contentContainerStyle={{ gap: 4, paddingBottom: 16 }}
 				renderItem={({ item }) => (
 					<MenuItemCard
+						key={`${item.name}-${imageKey}`}
 						name={item.name}
 						description={item.description}
 						price={item.price}

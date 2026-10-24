@@ -4,7 +4,15 @@ import { Picker } from "@react-native-picker/picker"
 import { useFocusEffect, useRouter } from "expo-router"
 import { useCallback, useState } from "react"
 import { Controller, useForm } from "react-hook-form"
-import { Platform, Pressable, ScrollView, Text, TextInput, View } from "react-native"
+import {
+	Platform,
+	Pressable,
+	RefreshControl,
+	ScrollView,
+	Text,
+	TextInput,
+	View,
+} from "react-native"
 
 import { ReservationFormValues, reservationSchema, TIME_SLOTS } from "../schema/reservation-schema"
 import { ConfirmationModal } from "./confirmation-modal"
@@ -14,11 +22,13 @@ import { ConfirmationModal } from "./confirmation-modal"
 interface ReservationFormProps {
 	date: string
 	onConfirmed: (values: ReservationFormValues) => void
+	onRefresh?: () => Promise<unknown> | void
 }
 
-export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
+export function ReservationForm({ date, onConfirmed, onRefresh }: ReservationFormProps) {
 	const [showDatePicker, setShowDatePicker] = useState(false)
 	const [pendingValues, setPendingValues] = useState<ReservationFormValues | null>(null)
+	const [refreshing, setRefreshing] = useState(false)
 
 	const router = useRouter()
 
@@ -69,8 +79,24 @@ export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
 		setPendingValues(values)
 	}
 
+	const handleRefresh = useCallback(async () => {
+		if (!onRefresh) return
+		setRefreshing(true)
+		try {
+			await onRefresh()
+		} finally {
+			setRefreshing(false)
+		}
+	}, [onRefresh])
+
 	return (
-		<ScrollView className="flex-1 bg-white px-4 pt-4" keyboardShouldPersistTaps="handled">
+		<ScrollView
+			className="flex-1 bg-white px-4 pt-4"
+			keyboardShouldPersistTaps="handled"
+			refreshControl={
+				onRefresh ? <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} /> : undefined
+			}
+		>
 			<Text className="font-heading text-primary-dark mb-2 text-xl">Reservation Details</Text>
 
 			{/* Visitation Date */}
@@ -237,7 +263,10 @@ export function ReservationForm({ date, onConfirmed }: ReservationFormProps) {
 
 			<View className="my-4 flex-row items-center justify-center gap-3">
 				<Pressable
-					onPress={handleSubmit(onSubmit)}
+					onPress={() => {
+						const submit = handleSubmit(onSubmit)
+						void submit()
+					}}
 					className="flex-1 rounded-full bg-primary-yellow px-4 py-3"
 				>
 					<Text className="text-center font-body-bold text-secondary-dark">Reserve a table</Text>
