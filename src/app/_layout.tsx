@@ -1,18 +1,63 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useColorScheme } from 'react-native';
+import { Karla_400Regular, Karla_500Medium, Karla_700Bold } from "@expo-google-fonts/karla"
+import {
+	MarkaziText_400Regular,
+	MarkaziText_500Medium,
+	useFonts,
+} from "@expo-google-fonts/markazi-text"
+import { QueryClientProvider } from "@tanstack/react-query"
+import { Drawer } from "expo-router/drawer"
+import { Alert } from "react-native"
+import { SafeAreaProvider } from "react-native-safe-area-context"
 
-import { AnimatedSplashOverlay } from '@/components/animated-icon';
-import AppTabs from '@/components/app-tabs';
+import { queryClient } from "@/shared/lib/query-client"
 
-SplashScreen.preventAutoHideAsync();
+import { Header } from "@/shared/ui/header"
+import { SideMenuContent } from "@/shared/ui/side-menu-content"
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <AnimatedSplashOverlay />
-      <AppTabs />
-    </ThemeProvider>
-  );
+import "@/global.css"
+
+/**
+ * To-do:
+ * [ ] Repositon "reservation button" in landing page, header section
+ * [ ] Add tabs layout
+ * [ ] Incorporate supabase library into project (after backend setup)
+ */
+
+export default function RootLayout() {
+	const [fontsLoaded] = useFonts({
+		MarkaziText: MarkaziText_400Regular,
+		"MarkaziText-Medium": MarkaziText_500Medium,
+		Karla: Karla_400Regular,
+		"Karla-Medium": Karla_500Medium,
+		"Karla-Bold": Karla_700Bold,
+	})
+
+	if (!fontsLoaded) return null
+
+	const onClickBasket = () => {
+		Alert.alert("You clicked the basket")
+	}
+
+	return (
+		<SafeAreaProvider>
+			<QueryClientProvider client={queryClient}>
+				<Drawer
+					drawerContent={(props) => <SideMenuContent {...props} />}
+					screenOptions={{
+						header: (props) => (
+							<Header showBack={props.route.name !== "index"} onBasketPress={onClickBasket} />
+						),
+						drawerType: "front",
+					}}
+				>
+					<Drawer.Screen name="index" options={{ title: "Home" }} />
+					<Drawer.Screen name="reservations/index" options={{ title: "Reservations" }} />
+					<Drawer.Screen
+						name="reservations/success"
+						options={{ drawerItemStyle: { display: "none" }, title: "Confirmation" }}
+					/>
+				</Drawer>
+			</QueryClientProvider>
+		</SafeAreaProvider>
+	)
 }
