@@ -1,5 +1,5 @@
 import { useNavigation, useRouter } from "expo-router"
-import { DrawerActions } from "expo-router/build/react-navigation"
+import { DrawerActions } from "expo-router/react-navigation"
 import { CircleChevronLeft } from "lucide-react-native"
 import { Pressable, View } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"

@@ -4,7 +4,7 @@
     "slug": "little_lemon_mobile",
     "version": "1.0.2",
     "orientation": "portrait",
-    "icon": "./src/assets/icons/icon.jpg",
+    "icon": "./src/assets/icons/icon.png",
     "scheme": "littlelemonmobile",
     "userInterfaceStyle": "automatic",
     "ios": {
