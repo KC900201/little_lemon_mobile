@@ -1,9 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Link } from "expo-router"
+import { Link, useRouter } from "expo-router"
+import { useState } from "react"
 import { Controller, useForm } from "react-hook-form"
-import { Text, View } from "react-native"
+import { Alert, Text, View } from "react-native"
 
-import { LoginValues, signupSchema, SignupValues } from "@/features/auth/schema/auth-schema"
+import { useAuth } from "@/context/auth-context"
+import { signupSchema, SignupValues } from "@/features/auth/schema/auth-schema"
 import { useAuthStore } from "@/features/auth/store/auth-store"
 
 import { AuthShell } from "@/features/auth/components/auth-shell"
@@ -11,6 +13,10 @@ import { Button } from "@/shared/ui/button"
 import { TextField } from "@/shared/ui/text-field"
 
 export default function SignupScreen() {
+	const router = useRouter()
+	const { signUp } = useAuth()
+	const [serverError, setServerError] = useState<string | null>(null)
+
 	const {
 		control,
 		handleSubmit,
@@ -22,11 +28,23 @@ export default function SignupScreen() {
 
 	const signIn = useAuthStore((s) => s.signIn)
 
-	// TODO: replace with the real auth call
-
-	const onSubmit = async (_values: LoginValues) => {
-		// await real auth call here
-		signIn()
+	const onSubmit = async (values: SignupValues) => {
+		setServerError(null)
+		try {
+			const { needsEmailConfirmation } = await signUp({
+				name: values.name,
+				email: values.email,
+				password: values.password,
+			})
+			if (needsEmailConfirmation) {
+				Alert.alert("Check your inbox", "We sent a confirmation link to your email.", [
+					{ text: "OK", onPress: () => router.replace("/login") },
+				])
+			}
+			// Otherwise a session exists and the root guard routes to Home
+		} catch (e) {
+			setServerError(e instanceof Error ? e.message : "Something went wrong. Please try again.")
+		}
 	}
 
 	return (
@@ -56,6 +74,8 @@ export default function SignupScreen() {
 						label="Email address"
 						placeholder="Enter email"
 						autoComplete="email"
+						keyboardType="email-address"
+						autoCapitalize="none"
 						value={value}
 						onChangeText={onChange}
 						onBlur={onBlur}
@@ -70,7 +90,7 @@ export default function SignupScreen() {
 				name="password"
 				render={({ field: { onChange, onBlur, value } }) => (
 					<TextField
-						label="Passwprd"
+						label="Password"
 						placeholder="At least 8 characters"
 						autoComplete="new-password"
 						value={value}
@@ -99,6 +119,8 @@ export default function SignupScreen() {
 					/>
 				)}
 			/>
+
+			{serverError && <Text className="mb-2 text-center text-sm text-red-500">{serverError}</Text>}
 
 			<View className="mt-2">
 				<Button label="Sign up" onPress={handleSubmit(onSubmit)} disabled={isSubmitting} />
