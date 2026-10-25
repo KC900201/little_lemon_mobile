@@ -19,6 +19,9 @@ import "@/global.css"
  * [x] Repositon "reservation button" in landing page, header section
  * [x] Add tabs layout
  * [x] Incorporate supabase library into project (after backend setup)
+ *  [ ] Login user (supabase)
+ *  [ ] Logout user (supabase)
+ * [ ] Create user profile tab / page feature
  */
 
 function RootNavigator() {

@@ -32,6 +32,7 @@ const toUser = (u: SupabaseUser): User => ({
 	id: u.id,
 	email: u.email ?? "",
 	name: (u.user_metadata?.name as string | undefined) ?? "",
+	profileImage: u.user_metadata?.avatar_url as string | undefined,
 })
 
 export function AuthProvider({ children }: { children: ReactNode }) {
