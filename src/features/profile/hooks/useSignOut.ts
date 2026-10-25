@@ -1,6 +1,7 @@
 import { Alert } from "react-native"
 
 import { useAuth } from "@/context/auth-context"
+import { router } from "expo-router"
 
 export function useSignOut() {
     const { signOut } = useAuth()
@@ -11,7 +12,14 @@ export function useSignOut() {
             {
                 text: "Sign out",
                 style: "destructive",
-                onPress: () => signOut().catch((e) => Alert.alert("Error", e.message)),
+                onPress: async () => {
+                    try {
+                        await signOut()
+                        router.replace("/login")
+                    } catch (e) {
+                        Alert.alert("Error", e instanceof Error ? e.message : "Sign out failed")
+                    }
+                } ,
             },
         ])
 }
