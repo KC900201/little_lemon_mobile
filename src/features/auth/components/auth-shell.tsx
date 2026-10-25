@@ -22,14 +22,16 @@ export function AuthShell({ title, subtitle, children }: AuthShellProps) {
 					keyboardShouldPersistTaps="handled"
 					showsVerticalScrollIndicator={false}
 				>
-					<SafeAreaView edges={["top"]} className="h-56 justify-end px-6 pb-8">
+					<SafeAreaView edges={["top"]} className="items-center justify-center px-6 pb-8 pt-4">
 						<Image
 							source={HeroImage}
 							resizeMode="cover"
-							className="absolute inset-0 h-full w-full opacity-25"
+							className="mb-2 h-32 w-32 rounded-full border-2 border-primary-yellow"
 						/>
-						<Text className="font-display text-5xl text-primary-yellow">Little Lemon</Text>
-						<Text className="font-display text-2xl text-white">Chicago</Text>
+						<Text className="text-center font-display text-5xl text-primary-yellow">
+							Little Lemon
+						</Text>
+						<Text className="text-center font-display text-2xl text-white">Chicago</Text>
 					</SafeAreaView>
 
 					<SafeAreaView edges={["bottom"]} className="flex-1 rounded-t-3xl bg-white px-6 pt-8">
