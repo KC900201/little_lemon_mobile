@@ -6,7 +6,6 @@ import { Alert, Text, View } from "react-native"
 
 import { useAuth } from "@/context/auth-context"
 import { signupSchema, SignupValues } from "@/features/auth/schema/auth-schema"
-import { useAuthStore } from "@/features/auth/store/auth-store"
 
 import { AuthShell } from "@/features/auth/components/auth-shell"
 import { Button } from "@/shared/ui/button"
@@ -25,8 +24,6 @@ export default function SignupScreen() {
 		resolver: zodResolver(signupSchema),
 		defaultValues: { name: "", email: "", password: "", confirmPassword: "" },
 	})
-
-	const signIn = useAuthStore((s) => s.signIn)
 
 	const onSubmit = async (values: SignupValues) => {
 		setServerError(null)

@@ -1,5 +1,8 @@
 import { create } from "zustand"
 
+/**
+ * @deprecated
+ */
 interface AuthState {
     isSignedIn: boolean
     isReady: boolean // false until the stored session has been checked
@@ -8,6 +11,9 @@ interface AuthState {
     setReady: () => void
 }
 
+/**
+ * @deprecated
+ */
 export const useAuthStore = create<AuthState>((set) => ({
     isSignedIn: false,
     isReady: false,

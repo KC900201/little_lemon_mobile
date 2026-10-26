@@ -5,9 +5,10 @@ import { Text, View } from "react-native"
 
 import { loginSchema, LoginValues } from "@/features/auth/schema/auth-schema"
 
-import { useAuthStore } from "@/features/auth/store/auth-store"
+import { useAuth } from "@/context/auth-context"
 
 import { AuthShell } from "@/features/auth/components/auth-shell"
+import { toAuthMessage } from "@/features/auth/lib/auth-error"
 import { Button } from "@/shared/ui/button"
 import { TextField } from "@/shared/ui/text-field"
 
@@ -15,18 +16,21 @@ export default function LoginScreen() {
 	const {
 		control,
 		handleSubmit,
+		setError,
 		formState: { errors, isSubmitting },
 	} = useForm<LoginValues>({
 		resolver: zodResolver(loginSchema),
 		defaultValues: { email: "", password: "" },
 	})
 
-	const signIn = useAuthStore((s) => s.signIn)
+	const { signIn } = useAuth()
 
-	// TODO: replace with real auth call (supabase)
-	const onSubmit = async (_values: LoginValues) => {
-		// await real auth call here
-		signIn()
+	const onSubmit = async (values: LoginValues) => {
+		try {
+			await signIn(values)
+		} catch (e) {
+			setError("password", { message: toAuthMessage(e) })
+		}
 	}
 
 	return (

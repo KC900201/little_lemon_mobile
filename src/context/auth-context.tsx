@@ -12,6 +12,11 @@ export type User = {
 	onboardingCompleted?: boolean
 }
 
+export interface SignInInput {
+	email: string
+	password: string
+}
+
 export interface SignUpInput {
 	name: string
 	email: string
@@ -22,6 +27,7 @@ interface AuthContextType {
 	user: User | null
 	session: Session | null
 	isReady: boolean
+	signIn: (input: SignInInput) => Promise<void>
 	signUp: (input: SignUpInput) => Promise<{ needsEmailConfirmation: boolean }>
 	signOut: () => Promise<void>
 }
@@ -50,7 +56,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 		return () => sub.subscription.unsubscribe()
 	}, [])
 
-	const signIn = async (email: string, password: string) => {}
+	const signIn = async ({ email, password }: SignInInput) => {
+		const { error } = await supabase.auth.signInWithPassword({
+			email: email.trim().toLowerCase(),
+			password,
+		})
+
+		if (error) throw error
+	}
 
 	const signUp = async ({ name, email, password }: SignUpInput) => {
 		const { data, error } = await supabase.auth.signUp({
@@ -70,7 +83,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 	return (
 		<AuthContext.Provider
-			value={{ user: session ? toUser(session.user) : null, session, isReady, signUp, signOut }}
+			value={{
+				user: session ? toUser(session.user) : null,
+				session,
+				isReady,
+				signUp,
+				signIn,
+				signOut,
+			}}
 		>
 			{children}
 		</AuthContext.Provider>
