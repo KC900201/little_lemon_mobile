@@ -14,14 +14,18 @@ import { AuthProvider, useAuth } from "@/context/auth-context"
 
 import "@/global.css"
 
+// https://moti.fyi/installation, https://docs.expo.dev/develop/user-interface/animation/,
+// https://docs.expo.dev/versions/latest/sdk/reanimated/
+
 /**
  * To-do:
- * [x] Repositon "reservation button" in landing page, header section
- * [x] Add tabs layout
- * [x] Incorporate supabase library into project (after backend setup)
- *  [x] Login user (supabase)
- *  [x] Logout user (supabase)
  * [x] Create user profile tab / page feature
+ * 	[ ] Update user profile feature (name, photo, dob)
+ * [ ] Create new APIs
+ * 	[ ] menu options API
+ *  [ ] reservation API
+ * [ ] UI updates
+ *  [ ] react-native-reanimated, react-native-worklets, moti
  */
 
 function RootNavigator() {
