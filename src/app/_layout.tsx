@@ -5,23 +5,47 @@ import {
 	useFonts,
 } from "@expo-google-fonts/markazi-text"
 import { QueryClientProvider } from "@tanstack/react-query"
-import { Drawer } from "expo-router/drawer"
-import { Alert } from "react-native"
+import { Stack } from "expo-router"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 
 import { queryClient } from "@/shared/lib/query-client"
 
-import { Header } from "@/shared/ui/header"
-import { SideMenuContent } from "@/shared/ui/side-menu-content"
+import { AuthProvider, useAuth } from "@/context/auth-context"
 
 import "@/global.css"
 
+// https://moti.fyi/installation, https://docs.expo.dev/develop/user-interface/animation/,
+// https://docs.expo.dev/versions/latest/sdk/reanimated/
+
 /**
  * To-do:
- * [ ] Repositon "reservation button" in landing page, header section
- * [ ] Add tabs layout
- * [ ] Incorporate supabase library into project (after backend setup)
+ * [x] Create user profile tab / page feature
+ * 	[ ] Update user profile feature (name, photo, dob)
+ * [ ] Create new APIs
+ * 	[ ] menu options API
+ *  [ ] reservation API
+ * [ ] UI updates
+ *  [ ] react-native-reanimated, react-native-worklets, moti
  */
+
+function RootNavigator() {
+	const { session, isReady } = useAuth()
+
+	if (!isReady) return null
+
+	const isSignedIn = !!session
+
+	return (
+		<Stack screenOptions={{ headerShown: false }}>
+			<Stack.Protected guard={!isSignedIn}>
+				<Stack.Screen name="(auth)" />
+			</Stack.Protected>
+			<Stack.Protected guard={isSignedIn}>
+				<Stack.Screen name="(tabs)" />
+			</Stack.Protected>
+		</Stack>
+	)
+}
 
 export default function RootLayout() {
 	const [fontsLoaded] = useFonts({
@@ -34,29 +58,12 @@ export default function RootLayout() {
 
 	if (!fontsLoaded) return null
 
-	const onClickBasket = () => {
-		Alert.alert("You clicked the basket")
-	}
-
 	return (
 		<SafeAreaProvider>
 			<QueryClientProvider client={queryClient}>
-				<Drawer
-					drawerContent={(props) => <SideMenuContent {...props} />}
-					screenOptions={{
-						header: (props) => (
-							<Header showBack={props.route.name !== "index"} onBasketPress={onClickBasket} />
-						),
-						drawerType: "front",
-					}}
-				>
-					<Drawer.Screen name="index" options={{ title: "Home" }} />
-					<Drawer.Screen name="reservations/index" options={{ title: "Reservations" }} />
-					<Drawer.Screen
-						name="reservations/success"
-						options={{ drawerItemStyle: { display: "none" }, title: "Confirmation" }}
-					/>
-				</Drawer>
+				<AuthProvider>
+					<RootNavigator />
+				</AuthProvider>
 			</QueryClientProvider>
 		</SafeAreaProvider>
 	)

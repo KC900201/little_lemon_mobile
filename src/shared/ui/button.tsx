@@ -1,6 +1,6 @@
 import { Pressable, Text } from "react-native"
 
-type ButtonVariant = "primary" | "secondary" | "tertiary"
+type ButtonVariant = "primary" | "secondary" | "tertiary" | "destructive"
 
 interface ButtonProps {
 	label: string
@@ -13,12 +13,14 @@ const VARIANT_CLASS: Record<ButtonVariant, string> = {
 	primary: "btn-primary",
 	secondary: "btn-secondary",
 	tertiary: "btn-tertiary",
+	destructive: "btn-secondary border border-secondary-salmon",
 }
 
 const VARIANT_TEXT_CLASS: Record<ButtonVariant, string> = {
 	primary: "text-secondary-dark",
 	secondary: "text-white",
 	tertiary: "text-secondary-dark",
+	destructive: "text-white",
 }
 
 export function Button({ label, onPress, variant = "primary", disabled }: ButtonProps) {
