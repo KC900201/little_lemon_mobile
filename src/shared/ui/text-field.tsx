@@ -23,6 +23,7 @@ export function TextField({ label, error, secureTextEntry, ...rest }: TextFieldP
 			>
 				<TextInput
 					{...rest}
+					accessibilityLabel={rest.accessibilityLabel ?? label}
 					secureTextEntry={hidden}
 					onFocus={(e) => {
 						setFocused(true)
